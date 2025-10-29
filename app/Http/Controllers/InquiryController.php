@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Inquiry;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Helpers\MailHelper;
 
 class InquiryController extends Controller
 {
@@ -72,6 +73,7 @@ class InquiryController extends Controller
             'time' => 'required'
         ]);
 
+
         // ✅ Fetch the existing record for that inquiry
         $existing = DB::table('inquiry')
             ->where('inquiry_id', $request->inquiry_id)
@@ -81,9 +83,11 @@ class InquiryController extends Controller
         if ($existing && !empty($existing->schedule_date) && !empty($existing->schedule_time)) {
             // There’s already a schedule → mark as 2 (rescheduled)
             $status = 2;
+            $mailSubject = 'Inquiry Rescheduled';
         } else {
             // First time scheduling → mark as 1
             $status = 1;
+            $mailSubject = 'Inquiry Scheduled';
         }
 
         // ✅ Prepare data
@@ -98,6 +102,20 @@ class InquiryController extends Controller
         DB::table('inquiry')
             ->where('inquiry_id', $request->inquiry_id)
             ->update($data);
+
+        $date = date('d-m-Y', strtotime($request->date));
+        $time = date('h:i A', strtotime($request->time));
+
+        $data = [
+            'Name' => $existing->customer_name ?? 'Customer',
+            'Email' => $existing->customer_email ?? 'admin@example.com',
+            'Mobile' => $existing->customer_phone ?? '-',
+            'Message' => "Your inquiry has been scheduled for {$date} at {$time}.",
+            'Subject' => $mailSubject,
+        ];
+
+        MailHelper::sendPartnerMail($data);
+
 
         return back()->with('success', 'Schedule added successfully');
     }
