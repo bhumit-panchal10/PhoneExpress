@@ -44,7 +44,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link menu-link @if (request()->routeIs('testimonial.index')) {{ 'active' }} @endif"
                                             href="{{ route('metaData.index') }}">
-                                            <i class="fa-solid fa-comments"></i>
+                                            <i class="fa-solid fa-clipboard-list"></i>
                                             <span data-key="t-dashboards">Meta Data</span>
                                         </a>
                                     </li>
@@ -52,7 +52,7 @@
                                     <li class="nav-item">
                                         <a class="nav-link menu-link @if (request()->routeIs('testimonial.index')) {{ 'active' }} @endif"
                                             href="{{ route('faq.index') }}">
-                                            <i class="fa-solid fa-comments"></i>
+                                            <i class="fa-regular fa-circle-question"></i>
                                             <span data-key="t-dashboards">Faq</span>
                                         </a>
                                     </li>
