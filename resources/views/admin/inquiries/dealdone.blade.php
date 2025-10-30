@@ -89,10 +89,10 @@
 
                                             <div class="col-lg-4 col-md-6">
                                                 <div>
-                                                    IMEI 2 <span style="color:red;">*</span>
+                                                    IMEI 2
                                                     <input type="text" class="form-control" placeholder="Enter IMEI 2 "
                                                         name="imei_2" id="imei_2" autocomplete="off"
-                                                        value="{{ $Inquiries->imei_2 }}" required>
+                                                        value="{{ $Inquiries->imei_2 }}">
                                                 </div>
                                                 @error('imei_2')
                                                     <span class="text-danger">{{ $message }}</span>

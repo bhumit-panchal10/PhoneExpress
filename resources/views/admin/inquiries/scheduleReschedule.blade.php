@@ -70,6 +70,10 @@
 
                                                 <td>
                                                     <div class="gap-6">
+                                                        <a class="mx-1" title="Schedule"
+                                                            href="{{ route('inquiry.schedule_inquirylist', $Inquiry->inquiry_id) }}">
+                                                            <i class="fa-regular fa-calendar-days"></i>
+                                                        </a>
                                                         <a class=""
                                                             href="{{ route('inquiry.dealdone', $Inquiry->inquiry_id) }}"
                                                             title="deal done">

@@ -146,12 +146,26 @@ class InquiryController extends Controller
     public function schedule_update(Request $request)
     {
 
+
+        $existing = DB::table('inquiry')->where('inquiry_id', $request->inquiry_id)->first();
+
         $Data = array(
             'schedule_date' => $request->schedule_date,
             'schedule_time' => $request->schdule_time,
             'status' => 2,
             'updated_at' => date('Y-m-d H:i:s')
         );
+        $date = date('d-m-Y', strtotime($request->schedule_date));
+        $time = date('h:i A', strtotime($request->schdule_time));
+        $data = [
+            'Name' => $existing->customer_name ?? 'Customer',
+            'Email' => $existing->customer_email ?? 'admin@example.com',
+            'Mobile' => $existing->customer_phone ?? '-',
+            'Message' => "Your inquiry has been scheduled for {$date} at {$time}.",
+            'Subject' => 'Inquiry Rescheduled',
+        ];
+
+        MailHelper::sendPartnerMail($data);
         DB::table('inquiry')->where('inquiry_id', $request->inquiry_id)->update($Data);
 
         return back()->with('success', 'Reschedule Add Successfully.');
@@ -159,7 +173,6 @@ class InquiryController extends Controller
 
     public function dealdone_update(Request $request)
     {
-
 
         $year_master = DB::table('year_masters')->where(['iStatus' => 1, 'isDelete' => 0])->first();
         $invoic = Inquiry::select('invoiceid')->where('prefix', $year_master->prefix)
@@ -176,7 +189,7 @@ class InquiryController extends Controller
             'customer_name' => $request->customer_name,
             'customer_phone' => $request->customer_phone,
             'imei_1' => $request->imei_1,
-            'imei_2' => $request->imei_2,
+            'imei_2' => $request->imei_2 ?? '',
             'brand' => $request->brand,
             'model' => $request->model,
             'address' => $request->address,
@@ -185,6 +198,21 @@ class InquiryController extends Controller
             'updated_at' => date('Y-m-d H:i:s')
         );
         DB::table('inquiry')->where('inquiry_id', $request->inquiry_id)->update($Data);
+
+        $deal = DB::table('inquiry')->where('inquiry_id', $request->inquiry_id)->first();
+
+        $dealdata = [
+            'Name' => $deal->customer_name ?? 'Customer',
+            'Email' => $deal->customer_email ?? 'admin@example.com',
+            'Mobile' => $deal->customer_phone ?? '-',
+            'invoiceno' => $deal->invoiceno ?? '-',
+            'Amount' => $deal->actual_amount ?? '-',
+            'Brand' => $deal->brand ?? '-',
+            'inquiry_id' => $deal->inquiry_id ?? '-',
+            'Model' => $deal->model ?? '-',
+            'Subject' => 'Deal Done',
+        ];
+        MailHelper::sendDealDoneMail($dealdata);
 
         return redirect()->route('inquiry.schedule_reschedule_inquirylist')->with('success', 'Deal Done Successfully.');
     }
