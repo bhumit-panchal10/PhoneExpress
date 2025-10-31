@@ -57,6 +57,14 @@
                                         </a>
                                     </li>
 
+                                    <li class="nav-item">
+                                        <a class="nav-link menu-link @if (request()->routeIs('testimonial.index')) {{ 'active' }} @endif"
+                                            href="{{ route('year.index') }}">
+                                            <i class="fa-regular fa-calendar-days"></i>
+                                            <span data-key="t-dashboards">Year</span>
+                                        </a>
+                                    </li>
+
                                 </ul>
                             </div>
                         </li>

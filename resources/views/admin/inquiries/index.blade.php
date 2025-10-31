@@ -26,6 +26,7 @@
                                             <th width="1%">No</th>
                                             <th width="5%"> Customer Name</th>
                                             <th width="5%">Customer Phone</th>
+                                            <th width="5%">Email</th>
                                             <th width="5%">IMEI 1</th>
                                             <th width="5%">IMEI 2</th>
                                             <th width="5%">Brand</th>
@@ -43,6 +44,7 @@
                                                 </td>
                                                 <td>{{ $Inquiry->customer_name }}</td>
                                                 <td>{{ $Inquiry->customer_phone }}</td>
+                                                <td>{{ $Inquiry->customer_email }}</td>
                                                 <td>{{ $Inquiry->imei_1 }}</td>
                                                 <td>{{ $Inquiry->imei_2 }}</td>
                                                 <td>{{ $Inquiry->brand }}</td>

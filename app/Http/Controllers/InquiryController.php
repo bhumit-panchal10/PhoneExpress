@@ -188,6 +188,7 @@ class InquiryController extends Controller
             'invoiceno' => $invoiceno,
             'customer_name' => $request->customer_name,
             'customer_phone' => $request->customer_phone,
+            'customer_email' => $request->customer_email,
             'imei_1' => $request->imei_1,
             'imei_2' => $request->imei_2 ?? '',
             'brand' => $request->brand,

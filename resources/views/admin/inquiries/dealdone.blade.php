@@ -46,7 +46,7 @@
                                                         placeholder="Enter Invoice No" name="invoiceno" id="invoiceno"
                                                         autocomplete="off" value="{{ $invoiceno }}" required readonly>
                                                 </div>
-                                                @error('name')
+                                                @error('invoiceno')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
@@ -57,7 +57,7 @@
                                                         name="customer_name" id="customer_name" autocomplete="off"
                                                         value="{{ $Inquiries->customer_name }}" required>
                                                 </div>
-                                                @error('name')
+                                                @error('customer_name')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
@@ -65,12 +65,23 @@
                                             <div class="col-lg-4 col-md-6">
                                                 <div>
                                                     Customer Phone <span style="color:red;">*</span>
-                                                    <input type="text" class="form-control"
-                                                        placeholder="Enter Designation" name="customer_phone"
-                                                        id="customer_phone" autocomplete="off"
+                                                    <input type="text" class="form-control" placeholder="Enter Phone"
+                                                        name="customer_phone" id="customer_phone" autocomplete="off"
                                                         value="{{ $Inquiries->customer_phone }}" required>
                                                 </div>
-                                                @error('designation')
+                                                @error('customer_phone')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="col-lg-4 col-md-6">
+                                                <div>
+                                                    Customer Email <span style="color:red;">*</span>
+                                                    <input type="text" class="form-control" placeholder="Enter Email"
+                                                        name="customer_email" id="customer_email" autocomplete="off"
+                                                        value="{{ $Inquiries->customer_email }}" required>
+                                                </div>
+                                                @error('customer_email')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
@@ -118,7 +129,7 @@
                                                         name="model" id="model" autocomplete="off"
                                                         value="{{ $Inquiries->model }}" required>
                                                 </div>
-                                                @error('brand')
+                                                @error('model')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
@@ -143,7 +154,7 @@
                                                         id="actual_amount" value="{{ $Inquiries->actual_amount }}"
                                                         autocomplete="off" required>
                                                 </div>
-                                                @error('address')
+                                                @error('actual_amount')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>
