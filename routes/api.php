@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\InquiryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/Customer_inquiry', [InquiryController::class, 'Customer_inquiry']);
+Route::post('/blogs', [InquiryController::class, 'blogs'])->name('blogs');
+Route::post('/blog/details', [InquiryController::class, 'blog_details'])->name('blog_details');

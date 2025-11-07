@@ -171,6 +171,6 @@ Route::prefix('admin')->name('testimonial.')->middleware('auth')->group(function
 Route::prefix('admin')->middleware('auth')->group(function () {
     Route::resource('year', YearController::class);
     Route::get('year-status/{id}', [\App\Http\Controllers\YearController::class, 'toggleStatus'])
-         ->name('year.toggleStatus');
+        ->name('year.toggleStatus');
     Route::get('year/get/{id}', [\App\Http\Controllers\YearController::class, 'getYear'])->name('year.get');
 });

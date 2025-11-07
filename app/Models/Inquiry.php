@@ -17,6 +17,8 @@ class Inquiry extends Model
         'imei_1',
         'imei_2',
         'brand',
+        'device_condition',
+        'message',
         'model',
         'expected_amt',
         'address',
