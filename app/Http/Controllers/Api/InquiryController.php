@@ -17,6 +17,8 @@ use App\Http\Controllers\PushNotificationController;
 use App\Models\Blog;
 use App\Models\Faq;
 use App\Models\Inquiry;
+use App\Models\Testimonial;
+
 use Google\Service\Monitoring\Custom;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
@@ -101,7 +103,7 @@ class InquiryController extends Controller
     public function faqlist(Request $request)
     {
         try {
-            $Faqs = Faq::get();
+            $Faqs = Faq::orderby('faqid', 'desc')->get();
             $data = [];
             foreach ($Faqs as $Faq) {
                 $data[]  = array(
@@ -123,10 +125,38 @@ class InquiryController extends Controller
         }
     }
 
+    public function testimoniallist(Request $request)
+    {
+        try {
+            $Testimonial = Testimonial::orderby('id', 'desc')->get();
+            $data = [];
+            foreach ($Testimonial as $Test) {
+                $data[]  = array(
+                    "id" => $Test->id,
+                    "name" => $Test->name,
+                    "designation" => $Test->designation,
+                    "city" => $Test->city,
+                    "Title" => $Test->title,
+
+                );
+            }
+
+            return response()->json([
+                'message' => 'successfully Testimonial fetched...',
+                'success' => true,
+                'data' => $data,
+            ], 200);
+        } catch (\Throwable $th) {
+            // If there's an error, rollback any database transactions and return an error response.
+            DB::rollBack();
+            return response()->json(['error' => $th->getMessage()], 500);
+        }
+    }
+
     public function blogs(Request $request)
     {
         try {
-            $blogs = Blog::get();
+            $blogs = Blog::orderBy('blogId', 'desc')->get();
 
             $data = [];
             foreach ($blogs as $ourTeam) {
@@ -135,7 +165,7 @@ class InquiryController extends Controller
                     "blogTitle" => $ourTeam->strTitle,
                     "slugname" => $ourTeam->strSlug,
                     "blogDescription" => $ourTeam->strDescription,
-                    // "blogDate" => $ourTeam->blogDate,
+                    "date" => $ourTeam->date,
                     "blogImage" => asset('uploads/Blog/' . $ourTeam->strPhoto)
                 );
             }
@@ -170,13 +200,13 @@ class InquiryController extends Controller
                 "blogTitle" => $blog->strTitle,
                 "slugname" => $blog->strSlug,
                 "blogDescription" => $blog->strDescription,
-                //"blogDate" => $blog->blogDate,
+                "date" => $blog->date,
                 "metaTitle" => $blog->metaTitle,
                 "metaKeyword" => $blog->metaKeyword,
                 "metaDescription" => $blog->metaDescription,
                 "head" => $blog->head,
                 "body" => $blog->body,
-                "blogImage" => asset('upload/Blog/' . $blog->strPhoto)
+                "blogImage" => asset('uploads/Blog/' . $blog->strPhoto)
             );
 
             return response()->json([

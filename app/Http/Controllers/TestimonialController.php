@@ -47,6 +47,8 @@ class TestimonialController extends Controller
                 'name' => $request->name,
                 'description' => $request->description,
                 'designation' => $request->designation,
+                'title' => $request->title,
+                'city' => $request->city,
                 'photo' => $img,
                 'created_at' => now(),
                 'strIP' => $request->ip()
@@ -112,6 +114,8 @@ class TestimonialController extends Controller
                 'name' => $request->name,
                 'description' => $request->description,
                 'designation' => $request->designation,
+                'title' => $request->title,
+                'city' => $request->city,
                 'photo' => $img,
                 'updated_at' => now(),
                 'strIP' => $request->ip()

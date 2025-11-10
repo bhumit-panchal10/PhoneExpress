@@ -14,6 +14,8 @@ class Testimonial extends Model
         'description',
         'designation',
         'photo',
+        'city',
+        'title',
         'iStatus',
         'isDelete',
         'strIP',

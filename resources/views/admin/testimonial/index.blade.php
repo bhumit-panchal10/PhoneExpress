@@ -33,6 +33,7 @@
                                             <th scope="col">Name</th>
                                             <th scope="col">Designation</th>
                                             <th scope="col">Photo</th>
+                                            <th scope="col">City</th>
                                             <th scope="col">Action</th>
                                         </tr>
                                     </thead>
@@ -55,6 +56,9 @@
                                                             style="width: 50px;height: 50px;">
                                                     @endif
                                                 </td>
+
+                                                <td class="text-center">{{ $testimonial->city ?? '' }}</td>
+
 
                                                 <td class="text-center">
                                                     <div class="gap-2">
