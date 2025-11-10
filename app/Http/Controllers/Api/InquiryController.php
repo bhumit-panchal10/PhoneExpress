@@ -15,6 +15,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Controllers\PushNotificationController;
 use App\Models\Blog;
+use App\Models\Faq;
 use App\Models\Inquiry;
 use Google\Service\Monitoring\Custom;
 use Illuminate\Support\Arr;
@@ -32,8 +33,10 @@ class InquiryController extends Controller
                 'Customer_email' => 'required',
                 'Customer_phone' => 'required|digits:10|unique:inquiry,customer_phone',
                 'brand' => 'nullable',
+                'model' => 'nullable',
                 'device_condition' => 'nullable',
-                'imei_1' => 'required',
+                'imei_1' => 'required|digits:15',
+                'imei_2' => 'required|digits:15',
                 'expected_amt' => 'required',
                 'message' => 'required',
             ]);
@@ -52,8 +55,10 @@ class InquiryController extends Controller
                 'customer_email' => $request->Customer_email,
                 'customer_phone' => $request->Customer_phone,
                 'brand' => $request->brand,
+                'model' => $request->model,
                 'device_condition' => $request->device_condition,
                 'imei_1' => $request->imei_1,
+                'imei_2' => $request->imei_2,
                 'expected_amt' => $request->expected_amt,
                 'message' => $request->message,
                 'created_at' => now(),
@@ -90,6 +95,31 @@ class InquiryController extends Controller
                 ],
                 500,
             );
+        }
+    }
+
+    public function faqlist(Request $request)
+    {
+        try {
+            $Faqs = Faq::get();
+            $data = [];
+            foreach ($Faqs as $Faq) {
+                $data[]  = array(
+                    "faqid" => $Faq->faqid,
+                    "question" => $Faq->question,
+                    "answer" => $Faq->answer,
+                );
+            }
+
+            return response()->json([
+                'message' => 'successfully Faqs fetched...',
+                'success' => true,
+                'data' => $data,
+            ], 200);
+        } catch (\Throwable $th) {
+            // If there's an error, rollback any database transactions and return an error response.
+            DB::rollBack();
+            return response()->json(['error' => $th->getMessage()], 500);
         }
     }
 
