@@ -51,12 +51,36 @@
 
                                             <div class="col-lg-4 col-md-6">
                                                 <div>
+                                                    Title <span style="color:red;">*</span>
+                                                    <input type="text" class="form-control" placeholder="Enter Title"
+                                                        name="title" id="title" autocomplete="off"
+                                                        value="{{ $data->title }}" required>
+                                                </div>
+                                                @error('title')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="col-lg-4 col-md-6">
+                                                <div>
                                                     Designation <span style="color:red;">*</span>
                                                     <input type="text" class="form-control"
                                                         placeholder="Enter Designation" name="designation" id="designation"
                                                         autocomplete="off" value="{{ $data->designation }}" required>
                                                 </div>
                                                 @error('designation')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="col-lg-4 col-md-6">
+                                                <div>
+                                                    City <span style="color:red;">*</span>
+                                                    <input type="text" class="form-control" placeholder="Enter City"
+                                                        name="city" id="city" autocomplete="off"
+                                                        value="{{ $data->city }}" required>
+                                                </div>
+                                                @error('city')
                                                     <span class="text-danger">{{ $message }}</span>
                                                 @enderror
                                             </div>

@@ -20,6 +20,7 @@ class Blog extends Model
         'metaDescription',
         'head',
         'body',
+        'date',
         'iStatus',
         'isDelete',
         'created_at',

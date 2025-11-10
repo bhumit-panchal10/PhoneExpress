@@ -69,6 +69,18 @@
                                                 </div>
                                             </div>
 
+                                            <div class="col-lg-4 col-md-6">
+                                                <div>
+                                                    <span style="color:red;">*</span>Date
+                                                    <input type="date" class="form-control" placeholder="Enter Date"
+                                                        name="date" id="date" autocomplete="off"
+                                                        value="{{ $data->date }}" required>
+                                                    @error('date')
+                                                        <span class="text-danger">{{ $message }}</span>
+                                                    @enderror
+                                                </div>
+                                            </div>
+
                                             <div class="col-lg-12 col-md-6">
                                                 <span style="color:red;">*</span>Description</label>
                                                 <textarea class="form-control ckeditor" name="strDescription" id="strDescription" rows="6">{{ $data->strDescription }}</textarea>
