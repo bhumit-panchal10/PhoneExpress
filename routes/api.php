@@ -22,3 +22,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/Customer_inquiry', [InquiryController::class, 'Customer_inquiry']);
 Route::post('/blogs', [InquiryController::class, 'blogs'])->name('blogs');
 Route::post('/blog/details', [InquiryController::class, 'blog_details'])->name('blog_details');
+Route::post('/faqlist', [InquiryController::class, 'faqlist'])->name('faqlist');
