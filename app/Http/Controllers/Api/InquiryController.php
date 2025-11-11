@@ -34,8 +34,8 @@ class InquiryController extends Controller
                 'Customer_name' => 'required',
                 'Customer_email' => 'required',
                 'Customer_phone' => 'required|digits:10|unique:inquiry,customer_phone',
-                'brand' => 'nullable',
-                'model' => 'nullable',
+                'brand' => 'required',
+                'model' => 'required',
                 'device_condition' => 'nullable',
                 'imei_1' => 'required|digits:15',
                 'imei_2' => 'required|digits:15',
@@ -67,6 +67,35 @@ class InquiryController extends Controller
             ];
 
             $Customer = Inquiry::create($Customerdata);
+            $sendEmailDetails = DB::table('sendemaildetails')->where(['id' => 4])->first();
+            if (!$sendEmailDetails) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Email configuration not found.'
+                ], 404);
+            }
+            $msg = [
+                'FromMail' => $sendEmailDetails->strFromMail,
+                'Title' => $sendEmailDetails->strTitle,
+                'ToEmail' => 'ai.dev.laravel10@gmail.com',
+                'Subject' => $sendEmailDetails->strSubject ?? '',
+            ];
+            $data = [
+                'customer_name' => $request->Customer_name,
+                'customer_email' => $request->Customer_email,
+                'customer_phone' => $request->Customer_phone,
+                'brand' => $request->brand,
+                'model' => $request->model,
+                'device_condition' => $request->device_condition,
+                'imei_1' => $request->imei_1,
+                'imei_2' => $request->imei_2,
+                'expected_amt' => $request->expected_amt,
+                'message' => $request->message,
+            ];
+            Mail::send('emails.contactusmail', ['data' => $data], function ($message) use ($msg) {
+                $message->from($msg['FromMail'], $msg['Title']);
+                $message->to($msg['ToEmail'])->subject($msg['Subject']);
+            });
             DB::commit();
             return response()->json(
                 [
