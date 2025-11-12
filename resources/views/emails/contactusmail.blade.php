@@ -12,5 +12,9 @@ $file = str_replace('#imei_1', $data['imei_1'], $file);
 $file = str_replace('#imei_2', $data['imei_2'], $file);
 $file = str_replace('#expected_amt', $data['expected_amt'], $file);
 $file = str_replace('#message', $data['message'], $file);
+$file = str_replace('#pickup_date', date('d-m-Y', strtotime($data['pickup_date'])), $file);
+$file = str_replace('#pickup_time', $data['pickup_time'], $file);
+$file = str_replace('#address', $data['address'], $file);
+
 echo $file;
 ?>

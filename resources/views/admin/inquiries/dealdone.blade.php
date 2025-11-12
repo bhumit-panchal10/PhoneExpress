@@ -159,6 +159,43 @@
                                                 @enderror
                                             </div>
 
+                                            <div class="col-lg-4 col-md-6">
+                                                <div>
+                                                    GST
+                                                    <input type="text" class="form-control" placeholder="Enter GST"
+                                                        name="gst" id="gst" autocomplete="off"
+                                                        value="{{ $Inquiries->gst }}">
+                                                </div>
+                                                @error('gst')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
+                                            <div class="col-lg-4 col-md-6">
+                                                <div>
+                                                    Pickup Date
+                                                    <input type="date" class="form-control"
+                                                        placeholder="Enter Pickup Date" name="pickup_date"
+                                                        id="pickup_date" value="{{ $Inquiries->pickup_date }}"
+                                                        autocomplete="off" readonly>
+                                                </div>
+                                                @error('pickup_date')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+                                            <div class="col-lg-4 col-md-6">
+                                                <div>
+                                                    Pickup Time
+                                                    <input type="time" class="form-control"
+                                                        placeholder="Enter Pickup Time" name="pickup_time"
+                                                        id="pickup_time" value="{{ $Inquiries->pickup_time }}"
+                                                        autocomplete="off" readonly>
+                                                </div>
+                                                @error('pickup_time')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                            </div>
+
 
 
                                         </div>

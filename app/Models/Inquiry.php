@@ -30,6 +30,11 @@ class Inquiry extends Model
         'created_at',
         'updated_at',
         'schedule_date',
-        'schedule_time'
+        'schedule_time',
+        'pickup_date',
+        'pickup_time',
+        'gst',
+        'total_amount'
+
     ];
 }

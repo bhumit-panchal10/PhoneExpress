@@ -197,6 +197,7 @@ class InquiryController extends Controller
     public function dealdone_update(Request $request)
     {
 
+
         $year_master = DB::table('year_masters')->where(['iStatus' => 1, 'isDelete' => 0])->first();
         $invoic = Inquiry::select('invoiceid')->where('prefix', $year_master->prefix)
             ->orderBy('inquiry_id', 'desc')
@@ -216,6 +217,7 @@ class InquiryController extends Controller
             'imei_2' => $request->imei_2 ?? '',
             'brand' => $request->brand,
             'model' => $request->model,
+            'gst' => $request->gst,
             'address' => $request->address,
             'actual_amount' => $request->actual_amount,
             'status' => 4,
@@ -231,11 +233,14 @@ class InquiryController extends Controller
             'Mobile' => $deal->customer_phone ?? '-',
             'invoiceno' => $deal->invoiceno ?? '-',
             'Amount' => $deal->actual_amount ?? '-',
+            'imei_1' => $deal->imei_1 ?? '-',
             'Brand' => $deal->brand ?? '-',
             'inquiry_id' => $deal->inquiry_id ?? '-',
             'Model' => $deal->model ?? '-',
+            'gst' => $deal->gst ?? '-',
             'Subject' => 'Deal Done',
         ];
+
         MailHelper::sendDealDoneMail($dealdata);
 
         return redirect()->route('inquiry.schedule_reschedule_inquirylist')->with('success', 'Deal Done Successfully.');

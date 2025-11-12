@@ -66,14 +66,32 @@ class MailHelper
     public static function sendDealDoneMail($dealData)
     {
 
+
         $sendEmailDetails = DB::table('sendemaildetails')->where('id', 10)->first();
 
         if (!$sendEmailDetails) {
             Log::error('Mail config not found for ID 10');
             return false;
         }
+        // ✅ Calculate GST
+
+        $amount = $dealData['Amount'] ?? 0;
+        $gstPercent = $dealData['gst'] ?? 0;
+
+
+        $ActualAmount = $amount / (1 + ($gstPercent / 100));
+        $gstAmount = $amount - $ActualAmount;
+
+        $ActualAmount = round($ActualAmount);
+        $gstAmount = round($gstAmount);
+        // dd($dealData);
+
+        // ✅ Add to deal data
+        $dealData['gst'] = $gstAmount;
+        $dealData['total_amount'] = $ActualAmount;
 
         // ✅ Basic info
+
         $msg = [
             'FromMail' => $sendEmailDetails->strFromMail,
             'Title' => $sendEmailDetails->strTitle,
@@ -91,21 +109,22 @@ class MailHelper
         ];
         $invoiceno = $dealData['invoiceno'];
 
-        try {
-            // ✅ Generate PDF using Blade view
-            $pdf = PDF::loadView('emails.dealdone_pdf', ['data' => $data]);
+        // try {
+        // ✅ Generate PDF using Blade view
+        $pdf = PDF::loadView('emails.dealdone_pdf', ['data' => $data]);
 
-            // ✅ Send the mail with PDF attachment
-            Mail::send('emails.dealdone_mail', ['data' => $data], function ($message) use ($msg, $pdf, $invoiceno) {
-                $message->from($msg['FromMail'], $msg['Title']);
-                $message->to($msg['ToEmail'])->subject($msg['Subject']);
-                $message->attachData($pdf->output(), "Deal-{$invoiceno}.pdf");
-            });
+        // ✅ Send the mail with PDF attachment
+        $mail =   Mail::send('emails.dealdone_mail', ['data' => $data], function ($message) use ($msg, $pdf, $invoiceno) {
+            $message->from($msg['FromMail'], $msg['Title']);
+            $message->to($msg['ToEmail'])->subject($msg['Subject']);
+            $message->attachData($pdf->output(), "Deal-{$invoiceno}.pdf");
+        });
 
-            return true;
-        } catch (\Exception $e) {
-            Log::error('Deal Done mail failed: ' . $e->getMessage());
-            return false;
-        }
+
+        return true;
+        // } catch (\Exception $e) {
+        //     Log::error('Deal Done mail failed: ' . $e->getMessage());
+        //     return false;
+        // }
     }
 }

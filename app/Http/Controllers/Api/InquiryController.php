@@ -57,6 +57,9 @@ class InquiryController extends Controller
                 'customer_email' => $request->Customer_email,
                 'customer_phone' => $request->Customer_phone,
                 'brand' => $request->brand,
+                'pickup_date' => $request->pickup_date ?? '',
+                'pickup_time' => $request->pickup_time ?? '',
+                'address' => $request->address,
                 'model' => $request->model,
                 'device_condition' => $request->device_condition,
                 'imei_1' => $request->imei_1,
@@ -91,6 +94,9 @@ class InquiryController extends Controller
                 'imei_2' => $request->imei_2,
                 'expected_amt' => $request->expected_amt,
                 'message' => $request->message,
+                'pickup_date' => $request->pickup_date,
+                'pickup_time' => $request->pickup_time,
+                'address' => $request->address,
             ];
             Mail::send('emails.contactusmail', ['data' => $data], function ($message) use ($msg) {
                 $message->from($msg['FromMail'], $msg['Title']);

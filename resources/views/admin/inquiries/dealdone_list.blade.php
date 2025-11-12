@@ -55,7 +55,7 @@
                                             <th width="5%">Model</th>
                                             <th width="5%">Expected Amt</th>
                                             <th width="5%">Actual Amt</th>
-                                            <th width="5%">Address</th>
+                                            <th width="20%">Address</th>
                                             <th width="10%">Schedule Date</th>
                                             <th width="5%">Schedule Time</th>
 
