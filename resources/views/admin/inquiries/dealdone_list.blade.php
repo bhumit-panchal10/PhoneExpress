@@ -12,9 +12,34 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="card">
-                            <div class="d-flex justify-content-between card-header">
+                            <div class="card-header d-flex justify-content-between align-items-center">
                                 <h5 class="card-title mb-0">Deal Done Inquiry List</h5>
+
+                                <form method="GET" action="{{ route('inquiry.dealdone_list') }}"
+                                    class="d-flex align-items-end gap-2">
+                                    <div>
+                                        <label for="from_date" class="form-label mb-0">From Date</label>
+                                        <input type="date" name="from_date" id="from_date"
+                                            value="{{ request('from_date') }}" class="form-control form-control-sm">
+                                    </div>
+                                    <div>
+                                        <label for="to_date" class="form-label mb-0">To Date</label>
+                                        <input type="date" name="to_date" id="to_date" value="{{ request('to_date') }}"
+                                            class="form-control form-control-sm">
+                                    </div>
+                                    <div>
+                                        <button type="submit" class="btn btn-sm btn-primary">Search</button>
+                                        <a href="{{ route('inquiry.dealdone_list') }}"
+                                            class="btn btn-sm btn-secondary">Reset</a>
+                                    </div>
+                                    <a href="{{ route('dealdone_list.export', request()->only(['from_date', 'to_date'])) }}"
+                                        class="btn btn-sm btn-success">
+                                        Export CSV
+                                    </a>
+
+                                </form>
                             </div>
+
                             <div class="card-body">
 
                                 <table id="scroll-horizontal" class="table nowrap align-middle" style="width:100%">
@@ -31,6 +56,8 @@
                                             <th width="5%">Expected Amt</th>
                                             <th width="5%">Actual Amt</th>
                                             <th width="5%">Address</th>
+                                            <th width="10%">Schedule Date</th>
+                                            <th width="5%">Schedule Time</th>
 
                                         </tr>
                                     </thead>
@@ -50,6 +77,8 @@
                                                 <td>{{ $Inquiry->expected_amt }}</td>
                                                 <td>{{ $Inquiry->actual_amount ?? 0 }}</td>
                                                 <td>{{ $Inquiry->address }}</td>
+                                                <td>{{ date('d-m-Y', strtotime($Inquiry->schedule_date)) }}</td>
+                                                <td>{{ date('H:i A', strtotime($Inquiry->schedule_time)) }}</td>
 
                                             </tr>
                                             <?php $i++; ?>
@@ -57,7 +86,7 @@
                                     </tbody>
                                 </table>
                                 <div class="d-flex justify-content-center mt-3">
-                                    {{ $Inquiries->links() }}
+                                    {{ $Inquiries->appends(request()->all())->links() }}
                                 </div>
                             </div>
                         </div>
