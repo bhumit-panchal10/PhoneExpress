@@ -115,6 +115,8 @@ Route::prefix('admin')->name('inquiry.')->middleware('auth')->group(function () 
     Route::post('/dealdone/update', [InquiryController::class, 'dealdone_update'])->name('dealdone_update');
     Route::get('/dealdone_list', [InquiryController::class, 'dealdone_list'])->name('dealdone_list');
 });
+Route::get('/dealdone_list/export', [InquiryController::class, 'exportDealDone'])
+    ->name('dealdone_list.export');
 
 //Testimonial Master
 Route::prefix('admin')->name('testimonial.')->middleware('auth')->group(function () {

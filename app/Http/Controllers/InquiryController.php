@@ -7,9 +7,21 @@ use App\Models\Inquiry;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\MailHelper;
+use App\Exports\DealDoneExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InquiryController extends Controller
 {
+    public function exportDealDone(Request $request)
+    {
+        $from_date = $request->get('from_date');
+        $to_date = $request->get('to_date');
+
+        $fileName = 'Deal_Done_List_' . now()->format('d-m-Y_H-i') . '.csv';
+
+        return Excel::download(new DealDoneExport($from_date, $to_date), $fileName, \Maatwebsite\Excel\Excel::CSV);
+    }
+
     public function pending_inquirylist(Request $request)
     {
         $Inquiries = Inquiry::where('status', 0)->orderBy('inquiry_id', 'desc')->paginate(10);
@@ -51,9 +63,20 @@ class InquiryController extends Controller
 
     public function dealdone_list(Request $request)
     {
-        $Inquiries = Inquiry::where('status', 4)
-            ->orderBy('inquiry_id', 'desc')
-            ->paginate();
+        $query = Inquiry::where('status', 4);
+        // Apply date filter if provided
+        if ($request->filled('from_date') && $request->filled('to_date')) {
+            $query->whereBetween('schedule_date', [
+                $request->from_date,
+                $request->to_date
+            ]);
+        } elseif ($request->filled('from_date')) {
+            $query->whereDate('schedule_date', '>=', $request->from_date);
+        } elseif ($request->filled('to_date')) {
+            $query->whereDate('schedule_date', '<=', $request->to_date);
+        }
+        $Inquiries = $query->orderBy('inquiry_id', 'desc')->paginate();
+        //dd($Inquiries);
 
         return view('admin.inquiries.dealdone_list', compact('Inquiries'));
     }
