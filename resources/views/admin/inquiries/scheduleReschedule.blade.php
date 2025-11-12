@@ -36,6 +36,8 @@
                                             <th width="5%">Schedule Date</th>
                                             <th width="5%">Schedule Time</th>
                                             <th width="5%">Status</th>
+                                            <th width="5%">Pickup Date</th>
+                                            <th width="5%">Pickup Time</th>
                                             <th width="5%">Action</th>
                                         </tr>
                                     </thead>
@@ -54,8 +56,14 @@
                                                 <td>{{ $Inquiry->model }}</td>
                                                 <td>{{ $Inquiry->expected_amt }}</td>
                                                 <td>{{ $Inquiry->address }}</td>
-                                                <td>{{ date('d-m-Y', strtotime($Inquiry->schedule_date)) }}</td>
-                                                <td>{{ date('h:i', strtotime($Inquiry->schedule_time)) }}</td>
+                                                <td>
+                                                    @if (!is_null($Inquiry->schedule_date) && $Inquiry->schedule_date != '' && $Inquiry->schedule_date != '0000-00-00')
+                                                        {{ date('d-m-Y', strtotime($Inquiry->schedule_date)) }}
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
+                                                <td>{{ date('h:i', strtotime($Inquiry->pickup_time)) }}</td>
                                                 <td>
                                                     @if ($Inquiry->status == 0)
                                                         Pending
@@ -69,6 +77,14 @@
                                                         Unknown
                                                     @endif
                                                 </td>
+                                                <td>
+                                                    @if (!is_null($Inquiry->pickup_date) && $Inquiry->pickup_date != '' && $Inquiry->pickup_date != '0000-00-00')
+                                                        {{ date('d-m-Y', strtotime($Inquiry->pickup_date)) }}
+                                                    @else
+                                                        -
+                                                    @endif
+                                                </td>
+                                                <td>{{ date('H:i', strtotime($Inquiry->pickup_time)) }}</td>
 
                                                 <td>
                                                     <div class="gap-6">

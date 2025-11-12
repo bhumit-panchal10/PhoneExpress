@@ -33,6 +33,8 @@
                                             <th width="5%">Model</th>
                                             <th width="5%">Expected Amt</th>
                                             <th width="5%">Address</th>
+                                            <th width="5%">Pickup Date</th>
+                                            <th width="5%">Pickup Time</th>
                                             <th width="5%">Action</th>
                                         </tr>
                                     </thead>
@@ -51,6 +53,9 @@
                                                 <td>{{ $Inquiry->model }}</td>
                                                 <td>{{ $Inquiry->expected_amt }}</td>
                                                 <td>{{ $Inquiry->address }}</td>
+                                                <td>{{ date('d-m-Y', strtotime($Inquiry->pickup_date)) }}</td>
+                                                <td>{{ date('H:i', strtotime($Inquiry->pickup_time)) }}</td>
+
 
                                                 <td>
                                                     <div class="gap-4">
