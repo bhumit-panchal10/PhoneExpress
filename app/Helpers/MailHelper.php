@@ -79,16 +79,16 @@ class MailHelper
         $gstPercent = $dealData['gst'] ?? 0;
 
 
-        $ActualAmount = $amount / (1 + ($gstPercent / 100));
-        $gstAmount = $amount - $ActualAmount;
+        // $ActualAmount = $amount / (1 + ($gstPercent / 100));
+        // $gstAmount = $amount - $ActualAmount;
 
-        $ActualAmount = round($ActualAmount);
-        $gstAmount = round($gstAmount);
+        // $ActualAmount = round($ActualAmount);
+        // $gstAmount = round($gstAmount);
         // dd($dealData);
 
         // ✅ Add to deal data
-        $dealData['gst'] = $gstAmount;
-        $dealData['total_amount'] = $ActualAmount;
+        // $dealData['gst'] = $gstAmount;
+        // $dealData['total_amount'] = $ActualAmount;
 
         // ✅ Basic info
 

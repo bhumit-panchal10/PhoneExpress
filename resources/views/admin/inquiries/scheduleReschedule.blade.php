@@ -36,7 +36,7 @@
                                             <th width="5%">Schedule Date</th>
                                             <th width="5%">Schedule Time</th>
                                             <th width="5%">Status</th>
-                                            <th width="5%">Pickup Date</th>
+                                            <th width="29%">Pickup Date</th>
                                             <th width="5%">Pickup Time</th>
                                             <th width="5%">Action</th>
                                         </tr>
