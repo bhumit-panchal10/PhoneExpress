@@ -33,7 +33,8 @@
                                             class="btn btn-sm btn-secondary">Reset</a>
                                     </div>
                                     <a href="{{ route('dealdone_list.export', request()->only(['from_date', 'to_date'])) }}"
-                                        class="btn btn-sm btn-success">
+                                        class="btn btn-sm btn-success" data-bs-toggle="modal"
+                                        data-bs-target="#exportPasswordModal">
                                         Export CSV
                                     </a>
 
@@ -95,4 +96,99 @@
             </div>
         </div>
     </div>
+    <!-- 🔐 Password Modal -->
+    <!-- 🔐 Password Modal -->
+    <div class="modal fade" id="exportPasswordModal" tabindex="-1" role="dialog"
+        aria-labelledby="exportPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exportPasswordModalLabel">Enter Export Password</h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="form-group position-relative">
+                        <label for="exportPassword">Password</label>
+                        <div class="input-group">
+                            <input type="password" id="exportPassword" class="form-control" placeholder="Enter password">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                    <i class="fa fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <small id="passwordError" class="text-danger d-none">Invalid password</small>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmExportBtn">Confirm & Export</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+@endsection
+@section('scripts')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const correctPassword = "Admin@123"; // 🔐 Static password
+            const confirmExportBtn = document.getElementById('confirmExportBtn');
+            const passwordInput = document.getElementById('exportPassword');
+            const passwordError = document.getElementById('passwordError');
+            const togglePasswordBtn = document.getElementById('togglePassword');
+            const exportModal = $('#exportPasswordModal');
+
+            // 👁 Toggle password visibility
+            togglePasswordBtn.addEventListener('click', function() {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+
+                // Change icon
+                const icon = this.querySelector('i');
+                icon.classList.toggle('fa-eye');
+                icon.classList.toggle('fa-eye-slash');
+            });
+
+            // ✅ Handle export confirmation
+            confirmExportBtn.addEventListener('click', function() {
+                const enteredPassword = passwordInput.value.trim();
+
+                if (enteredPassword === correctPassword) {
+                    passwordError.classList.add('d-none');
+
+                    // Close modal
+                    exportModal.modal('hide');
+
+                    // Trigger download
+                    const exportUrl = @json(route('dealdone_list.export', request()->only(['from_date', 'to_date'])));
+                    window.location.href = exportUrl;
+                } else {
+                    passwordError.classList.remove('d-none');
+                }
+            });
+
+            // 🧹 Reset modal on open/close
+            exportModal.on('shown.bs.modal', function() {
+                passwordInput.value = '';
+                passwordError.classList.add('d-none');
+                passwordInput.focus();
+            });
+
+            exportModal.on('hidden.bs.modal', function() {
+                passwordInput.value = '';
+                passwordError.classList.add('d-none');
+                passwordInput.setAttribute('type', 'password'); // reset to hidden
+                const icon = togglePasswordBtn.querySelector('i');
+                icon.classList.add('fa-eye');
+                icon.classList.remove('fa-eye-slash');
+            });
+        });
+    </script>
+
 @endsection
