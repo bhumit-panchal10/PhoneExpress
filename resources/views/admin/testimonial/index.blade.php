@@ -32,7 +32,7 @@
                                             <th scope="col">Sr No.</th>
                                             <th scope="col">Name</th>
                                             <th scope="col">Designation</th>
-                                            <th scope="col">Photo</th>
+                                            {{-- <th scope="col">Photo</th> --}}
                                             <th scope="col">City</th>
                                             <th scope="col">Action</th>
                                         </tr>
@@ -47,7 +47,7 @@
                                                 <td class="text-center">{{ $testimonial->name }}</td>
                                                 <td class="text-center">{{ $testimonial->designation }}</td>
 
-                                                <td class="text-center">
+                                                {{-- <td class="text-center">
                                                     @if ($testimonial->photo)
                                                         <img src="{{ asset('uploads/testimonial') . '/' . $testimonial->photo }}"
                                                             style="width: 50px;height: 50px;">
@@ -55,7 +55,7 @@
                                                         <img src="{{ asset('assets/images/noimage.png') }}"
                                                             style="width: 50px;height: 50px;">
                                                     @endif
-                                                </td>
+                                                </td> --}}
 
                                                 <td class="text-center">{{ $testimonial->city ?? '' }}</td>
 

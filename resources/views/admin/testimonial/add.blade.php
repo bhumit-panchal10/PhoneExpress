@@ -83,7 +83,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="col-lg-3 col-md-6">
+                                            {{-- <div class="col-lg-3 col-md-6">
                                                 <div>
                                                     Photo <span style="color:red;">*</span>
                                                     <input type="file" class="form-control" name="photo" id="strPhoto"
@@ -96,7 +96,7 @@
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
                                             <div class="col-lg-12 col-md-6">
                                                 <span style="color:red;"></span> Description
