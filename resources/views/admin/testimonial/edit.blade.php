@@ -85,7 +85,7 @@
                                                 @enderror
                                             </div>
 
-                                            <div class="col-lg-3 col-md-6">
+                                            {{-- <div class="col-lg-3 col-md-6">
                                                 <div>
                                                     Photo <span style="color:red;"></span>
                                                     <input type="file" class="form-control" name="photo" id="strPhoto"
@@ -94,8 +94,8 @@
                                                         value="{{ old('photo') ? old('photo') : $data->photo }}"
                                                         id="hiddenPhoto">
                                                 </div>
-                                            </div>
-                                            <div class="col-lg-1 col-md-6">
+                                            </div> --}}
+                                            {{-- <div class="col-lg-1 col-md-6">
                                                 <div id="viewimg">
                                                     @if ($data->photo)
                                                         <img src="{{ asset('uploads/testimonial') . '/' . $data->photo }}"
@@ -108,7 +108,7 @@
                                                         <span class="text-danger">{{ $message }}</span>
                                                     @enderror
                                                 </div>
-                                            </div>
+                                            </div> --}}
 
                                             <div class="col-lg-12 col-md-6">
                                                 <span style="color:red;"></span> Description

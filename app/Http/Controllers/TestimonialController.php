@@ -32,16 +32,16 @@ class TestimonialController extends Controller
                 'name' => 'required|string|max:255',
                 'description' => 'required',
                 'designation' => 'required|string|max:255',
-                'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
+                // 'photo' => 'required|image|mimes:jpeg,png,jpg,gif,svg',
             ]);
 
-            $img = "";
-            if ($request->hasFile('photo')) {
-                $image = $request->file('photo');
-                $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
-                $image->move(FolderPath('/uploads/testimonial'), $imageName);
-                $img = $imageName;
-            }
+            // $img = "";
+            // if ($request->hasFile('photo')) {
+            //     $image = $request->file('photo');
+            //     $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+            //     $image->move(FolderPath('/uploads/testimonial'), $imageName);
+            //     $img = $imageName;
+            // }
 
             $Data = array(
                 'name' => $request->name,
@@ -49,7 +49,7 @@ class TestimonialController extends Controller
                 'designation' => $request->designation,
                 'title' => $request->title,
                 'city' => $request->city,
-                'photo' => $img,
+                // 'photo' => $img,
                 'created_at' => now(),
                 'strIP' => $request->ip()
             );
@@ -81,34 +81,34 @@ class TestimonialController extends Controller
                 'name' => 'required|string|max:255',
                 'description' => 'required',
                 'designation' => 'required|string|max:255',
-                'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
+                // 'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg',
             ]);
 
             // Find category safely
             $category = Testimonial::where('isDelete', 0)->where('id', $request->id)->firstOrFail();
 
-            $img = $category->photo;
+            // $img = $category->photo;
 
-            if ($request->hasFile('photo')) {
-                $image = $request->file('photo');
-                $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
+            // if ($request->hasFile('photo')) {
+            //     $image = $request->file('photo');
+            //     $imageName = time() . '_' . uniqid() . '.' . $image->getClientOriginalExtension();
 
-                $destinationPath = FolderPath('/uploads/testimonial');
+            //     $destinationPath = FolderPath('/uploads/testimonial');
 
-                // Ensure folder exists
-                if (!file_exists($destinationPath)) {
-                    mkdir($destinationPath, 0755, true);
-                }
+            //     // Ensure folder exists
+            //     if (!file_exists($destinationPath)) {
+            //         mkdir($destinationPath, 0755, true);
+            //     }
 
-                $image->move($destinationPath, $imageName);
-                $img = $imageName;
+            //     $image->move($destinationPath, $imageName);
+            //     $img = $imageName;
 
-                // Delete old image if exists
-                $oldImagePath = $destinationPath . '/' . $category->photo;
-                if ($category->photo && file_exists($oldImagePath)) {
-                    unlink($oldImagePath);
-                }
-            }
+            //     // Delete old image if exists
+            //     $oldImagePath = $destinationPath . '/' . $category->photo;
+            //     if ($category->photo && file_exists($oldImagePath)) {
+            //         unlink($oldImagePath);
+            //     }
+            // }
 
             $category->update([
                 'name' => $request->name,
@@ -116,7 +116,7 @@ class TestimonialController extends Controller
                 'designation' => $request->designation,
                 'title' => $request->title,
                 'city' => $request->city,
-                'photo' => $img,
+                // 'photo' => $img,
                 'updated_at' => now(),
                 'strIP' => $request->ip()
             ]);
